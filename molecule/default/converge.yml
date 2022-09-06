@@ -3,7 +3,7 @@
   hosts: all
 
   roles:
-    - role: ansible-role-fail2ban
+    - role: boutetnico.fail2ban
 
       fail2ban_configuration:
         Definition:
