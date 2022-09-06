@@ -3,9 +3,9 @@
   hosts: all
 
   tasks:
-    - name: create auth.log otherwise fail2ban won't run
+    - name: Create auth.log otherwise fail2ban won't run
       become: true
-      file:
+      ansible.builtin.file:
         group: root
         mode: 0644
         owner: root
