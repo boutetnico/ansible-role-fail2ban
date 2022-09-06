@@ -18,6 +18,6 @@ galaxy_info:
   galaxy_tags:
     - attack
     - ban
-    - brute-force
+    - bruteforce
     - fail2ban
 dependencies: []
