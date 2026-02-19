@@ -31,6 +31,8 @@
     owner: root
     src: filter.conf.j2
   loop: "{{ fail2ban_filters | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
   notify: Restart Fail2ban
 
 - name: Ensure Fail2ban actions are set
@@ -41,6 +43,8 @@
     owner: root
     src: action.conf.j2
   loop: "{{ fail2ban_actions | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
   notify: Restart Fail2ban
 
 - name: Ensure Fail2ban is started and starts on boot
