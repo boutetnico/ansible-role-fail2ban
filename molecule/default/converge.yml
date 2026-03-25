@@ -33,12 +33,14 @@
       fail2ban_actions:
         nginx-deny-host:
           Definition:
+            actionstart: ""
+            actionstop: ""
+            actioncheck: ""
             actionban: |
-              sed -i "/deny <ip>;/d" <file>
-                          echo "deny <ip>;" >> <file>
-                          systemctl reload nginx
+              grep -qF "deny <ip>;" <file> 2>/dev/null || echo "deny <ip>;" >> <file>
+              nginx -t && nginx -s reload
             actionunban: |
               sed -i "/deny <ip>;/d" <file>
-                            systemctl reload nginx
+              nginx -t && nginx -s reload
           Init:
             file: /etc/nginx/hosts.deny

@@ -56,3 +56,30 @@ def test_service_is_running_and_enabled(host, name):
 def test_fail2ban_client_command_works(host):
     cmd = host.run("fail2ban-client --version")
     assert cmd.rc == 0
+
+
+def test_action_multiline_values_are_indented(host):
+    config = host.file("/etc/fail2ban/action.d/nginx-deny-host.conf")
+    content = config.content_string
+    for line in content.splitlines():
+        # Lines that are continuations (not section headers, not key=value, not blank, not comments)
+        if (
+            line
+            and not line.startswith("[")
+            and "=" not in line
+            and not line.startswith("#")
+        ):
+            assert line.startswith(" "), f"Continuation line is not indented: {line!r}"
+
+
+def test_filter_multiline_values_are_indented(host):
+    config = host.file("/etc/fail2ban/filter.d/nginx-badbots.conf")
+    content = config.content_string
+    for line in content.splitlines():
+        if (
+            line
+            and not line.startswith("[")
+            and "=" not in line
+            and not line.startswith("#")
+        ):
+            assert line.startswith(" "), f"Continuation line is not indented: {line!r}"

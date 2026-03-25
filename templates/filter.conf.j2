@@ -3,7 +3,7 @@
 {% for section_name, section_items in item.value.items() %}
 [{{ section_name }}]
 {%   for key, value in section_items.items() %}
-{{ key }} = {{ value }}
+{{ key }} = {{ value | indent(key | length + 3, false) }}
 {%   endfor %}
 
 {% endfor %}
